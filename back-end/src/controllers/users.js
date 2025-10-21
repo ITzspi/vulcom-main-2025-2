@@ -179,6 +179,16 @@ controller.login = async function(req, res) {
         maxAge: 24 * 60 * 60 * 100  // 24h
       })
 
+      // Cookie não HTTP-only, acessível via JS no front-end
+      res.cookie('not-http-only', 'Este-cookie-NAO-eh-HTTP-Only', {
+        httpOnly: false,
+        secure: true,   // O cookie será criptografado em conexões https
+        sameSite: 'None',
+        path: '/',
+        maxAge: 24 * 60 * 60 * 100  // 24h
+      })
+
+
       // Retorna o token e o usuário autenticado com
       // HTTP 200: OK (implícito)
       res.send({token, user})
@@ -190,6 +200,10 @@ controller.login = async function(req, res) {
     // HTTP 500: Internal Server Error
     res.status(500).end()
   }
+  // Retorna APENAS o usuário autenticado com
+      // HTTP 200: OK (implícito)
+      res.send({user})
+
 }
 
 
@@ -197,6 +211,13 @@ controller.me = function(req, res) {
   // Retorna as informações do usuário autenticado
   // HTTP 200: OK (implícito)
   res.send(req?.authUser)
+}
+
+controller.logout = function(req, res) {
+  // Apaga no front-end o cookie que armazena o token
+  res.clearCookie(process.env.AUTH_COOKIE_NAME)
+  // HTTP 204: No Content
+  res.status(204).end()
 }
 
 export default controller
