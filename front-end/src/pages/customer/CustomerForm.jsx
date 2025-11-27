@@ -206,7 +206,6 @@ export default function CustomerForm() {
             helperText={inputErrors?.name}
           />
 
-
           <InputMask
             mask="999.999.999-99"
             value={customer.ident_document}

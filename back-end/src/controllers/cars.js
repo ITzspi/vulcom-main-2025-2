@@ -5,12 +5,12 @@ const controller = {}     // Objeto vazio
 controller.create = async function(req, res) {
   try {
 
-    // Preenche qual usuário criou o carro com o id do usuário autenticado
-    req.body.created_user_id = req.authUser.id
+    // // Preenche qual usuário criou o carro com o id do usuário autenticado
+    // req.body.created_user_id = req.authUser.id
 
-    // Preenche qual usuário modificou por último o carro com o id
-    // do usuário autenticado
-    req.body.updated_user_id = req.authUser.id
+    // // Preenche qual usuário modificou por último o carro com o id
+    // // do usuário autenticado
+    // req.body.updated_user_id = req.authUser.id
 
     await prisma.car.create({ data: req.body })
 
