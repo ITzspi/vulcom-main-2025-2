@@ -4,6 +4,13 @@ import bcrypt from 'bcrypt'
 
 const controller = {}     // Objeto vazio
 
+/*
+Vulnerabilidade: API2:2023 Falha de autenticação
+Esta vulnerabilidade foi evitada no código ao:
+1. Remover a autenticação fixa (admin/admin123).
+2. Implementar o hashing seguro de senhas com Bcrypt (12 passos de criptografia).
+3. Usar bcrypt.compare() no método login para verificar a senha.
+*/
 
 controller.create = async function(req, res) {
   try {
@@ -37,6 +44,16 @@ controller.create = async function(req, res) {
 
 controller.retrieveAll = async function(req, res) {
   try {
+
+    /*
+        Vulnerabilidade: API5:2023 Falha de autenticação a nível de função
+        Esta vulnerabilidade foi evitada no código ao aplicar o Controle de Acesso Baseado em Função (RBAC),
+        que verifica a propriedade is_admin do usuário autenticado (req.authUser).
+        Isso garante que apenas usuários com nível de acesso 'ADMIN' possam listar todos os usuários,
+        prevenindo a obtenção de recursos de outros usuários por um atacante de nível regular.
+        */
+        // Somente usuários administradores podem acessar este recurso
+        // HTTP 403: Forbidden
 
     // Somente usuários administradores podem acessar este recurso
     // HTTP 403: Forbidden(

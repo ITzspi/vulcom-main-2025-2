@@ -23,6 +23,13 @@ app.use(cookieParser())
 // pode efetuar dentro de um determinado intervalo de tempo
 import { rateLimit } from 'express-rate-limit'
 
+/*
+Vulnerabilidade: API4:2023 Consumo irrestrito de recursos
+Esta vulnerabilidade foi evitada no código ao implementar o middleware 'express-rate-limit'.
+O limitador restringe a 20 o número máximo de requisições por IP a cada minuto (windowMs: 60*1000, limit: 20),
+prevenindo ataques automatizados de força bruta e negação de serviço (DoS).
+*/
+
 
 const limiter = rateLimit({
  windowMs: 60 * 1000,    // Intervalo: 1 minuto
